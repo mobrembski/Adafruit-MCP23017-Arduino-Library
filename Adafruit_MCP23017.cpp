@@ -110,6 +110,21 @@ void Adafruit_MCP23017::updateRegisterBit(uint8_t pin, uint8_t pValue,
 ////////////////////////////////////////////////////////////////////////////////
 
 /*!
+ * Initializes the library but not re-initalising MCP - so MCP registers are retained.
+  * @param addr Selected address
+ * @param theWire the I2C object to use, defaults to &Wire
+ */
+void Adafruit_MCP23017::beginNoInit(uint8_t addr, TwoWire *theWire) {
+  if (addr > 7) {
+    addr = 7;
+  }
+  i2caddr = addr;
+  _wire = theWire;
+
+  _wire->begin();
+}
+
+/*!
  * Initializes the MCP23017 given its HW selected address, see datasheet for
  * Address selection.
  * @param addr Selected address
